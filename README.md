@@ -616,6 +616,7 @@ This project is licensed under the MIT License.
 For issues and questions:
 - Create an issue on GitHub
 - Check the [Interlace API Documentation](https://developer.interlace.money/)
+- Join our [Telegram Community](https://t.me/+4mjzOw6Z3Sk0NWE0)
 
 ---
 
