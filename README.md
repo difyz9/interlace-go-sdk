@@ -144,7 +144,7 @@ client.SetAccessToken(tokenData.AccessToken)
 **Method 1: Using struct (recommended for complex scenarios)**
 ```go
 registerReq := &interlace.AccountRegisterRequest{
-    PhoneNumber:      "15900000042",
+    PhoneNumber:      "15800000001",
     Email:            "user@example.com",
     Name:             "John Doe",
     PhoneCountryCode: "86",
@@ -155,12 +155,12 @@ account, err := client.Account.Register(ctx, registerReq)
 
 **Method 2: Using direct parameters (convenient)**
 ```go
-account, err := client.Account.RegisterWithDetails(ctx, "86", "15900000031", "15900000031@qq.com", "golang_test")
+account, err := client.Account.RegisterWithDetails(ctx, "86", "15800000001", "15800000001@qq.com", "golang_test")
 ```
 
 **Method 3: Quick test account (for development)**
 ```go
-// Creates account with preset test data: phone=15900000031, email=15900000031@qq.com, name=golang_test
+// Creates account with preset test data: phone=15800000001, email=15800000001@qq.com, name=golang_test
 account, err := client.Account.RegisterGolangTest(ctx)
 ```
 
@@ -539,8 +539,8 @@ func main() {
     
     // Step 3: Register Account
     registerReq := &interlace.AccountRegisterRequest{
-        PhoneNumber:      "15900000042",
-        Email:            "15900000042@qq.com",
+        PhoneNumber:      "15800000001",
+        Email:            "15800000001@qq.com",
         Name:             "saf",
         PhoneCountryCode: "86",
     }
