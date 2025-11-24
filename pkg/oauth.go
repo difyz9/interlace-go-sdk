@@ -83,3 +83,28 @@ func (c *OAuthClient) AuthorizeAndGetToken(ctx context.Context, clientID string)
 
 	return tokenData, nil
 }
+
+// RefreshToken refreshes the access token using a refresh token
+func (c *OAuthClient) RefreshToken(ctx context.Context, clientID, refreshToken string) (*OAuthRefreshTokenData, error) {
+	// Prepare request body
+	refreshReq := OAuthRefreshTokenRequest{
+		ClientID:     clientID,
+		RefreshToken: refreshToken,
+	}
+
+	var refreshResp OAuthRefreshTokenResponse
+	err := c.httpClient.DoPostRequestNoAuth(ctx, "/open-api/v3/oauth/refresh-token", refreshReq, &refreshResp)
+	if err != nil {
+		return nil, err
+	}
+
+	// Check for API errors
+	if refreshResp.Code != "000000" {
+		return nil, &Error{
+			Code:    refreshResp.Code,
+			Message: refreshResp.Message,
+		}
+	}
+
+	return &refreshResp.Data, nil
+}

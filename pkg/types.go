@@ -43,6 +43,24 @@ type OAuthTokenData struct {
 	Timestamp    int64  `json:"timestamp"`
 }
 
+// OAuthRefreshTokenRequest represents the OAuth refresh token request
+type OAuthRefreshTokenRequest struct {
+	ClientID     string `json:"clientId"`
+	RefreshToken string `json:"refreshToken"`
+}
+
+// OAuthRefreshTokenResponse represents the OAuth refresh token response
+type OAuthRefreshTokenResponse struct {
+	BaseResponse
+	Data OAuthRefreshTokenData `json:"data"`
+}
+
+type OAuthRefreshTokenData struct {
+	AccessToken string `json:"accessToken"`
+	ExpiresIn   int    `json:"expiresIn"`
+	Timestamp   int64  `json:"timestamp"`
+}
+
 // AccountRegisterRequest represents the account registration request
 type AccountRegisterRequest struct {
 	PhoneNumber      string `json:"phoneNumber"`
