@@ -83,9 +83,9 @@ func (c *FileClient) UploadFileFromReader(ctx context.Context, reader io.Reader,
 	}
 
 	// Check for API errors
-	if uploadResp.Code != "000000" {
+	if uploadResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    uploadResp.Code,
+			Code:    uploadResp.GetCode(),
 			Message: uploadResp.Message,
 		}
 	}
@@ -151,9 +151,9 @@ func (c *FileClient) UploadMultipleFiles(ctx context.Context, filePaths []string
 	}
 
 	// Check for API errors
-	if uploadResp.Code != "000000" {
+	if uploadResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    uploadResp.Code,
+			Code:    uploadResp.GetCode(),
 			Message: uploadResp.Message,
 		}
 	}

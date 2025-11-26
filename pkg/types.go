@@ -7,10 +7,33 @@ import (
 )
 
 // BaseResponse represents the common response structure from Interlace API
+// Note: Code can be either string or number in API responses
 type BaseResponse struct {
-	Code    string      `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+	Code    json.RawMessage `json:"code"`
+	Message string          `json:"message"`
+	Data    interface{}     `json:"data"`
+}
+
+// GetCode returns the code as a string, handling both numeric and string formats
+func (b *BaseResponse) GetCode() string {
+	if len(b.Code) == 0 {
+		return ""
+	}
+	
+	// Try to unmarshal as string first
+	var strCode string
+	if err := json.Unmarshal(b.Code, &strCode); err == nil {
+		return strCode
+	}
+	
+	// If that fails, try as number
+	var numCode float64
+	if err := json.Unmarshal(b.Code, &numCode); err == nil {
+		return fmt.Sprintf("%.0f", numCode)
+	}
+	
+	// Fallback: return as-is without quotes
+	return string(b.Code)
 }
 
 // OAuthAuthorizeResponse represents the OAuth authorization response
@@ -374,7 +397,7 @@ func ParseError(body []byte) *Error {
 	}
 
 	return &Error{
-		Code:    apiError.Code,
+		Code:    apiError.GetCode(),
 		Message: apiError.Message,
 	}
 }

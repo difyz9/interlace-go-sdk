@@ -12,13 +12,15 @@ import (
 func main() {
 	// Create a new client
 	config := interlace.DefaultConfig()
-	httpClient := interlace.NewHTTPClient(config)
+	// For OAuth flow, we don't have an access token yet, so pass empty string
+	httpClient := interlace.NewHTTPClient(config, "")
 	oauthClient := interlace.NewOAuthClient(httpClient)
 
 	ctx := context.Background()
 
 	// Your client ID from Interlace
-	clientID := "qbit22c4571c943240d5"
+	
+	clientID := "your-client-id-here"
 
 	// Example 1: Get initial access token and refresh token
 	fmt.Println("Step 1: Getting initial access token...")
@@ -43,26 +45,25 @@ func main() {
 	fmt.Println("\nStep 3: Refreshing access token...")
 	newTokenData, err := oauthClient.RefreshToken(ctx, clientID, refreshToken)
 	if err != nil {
-		log.Fatalf("Failed to refresh token: %v", err)
-	}
-
-	fmt.Printf("New Access Token: %s\n", newTokenData.AccessToken)
-	fmt.Printf("Expires In: %d seconds\n", newTokenData.ExpiresIn)
-	fmt.Printf("Timestamp: %d\n", newTokenData.Timestamp)
-
-	// Example 3: Token refresh with error handling
-	fmt.Println("\nStep 4: Demonstrating error handling...")
-	invalidRefreshToken := "invalid_token_123"
-	_, err = oauthClient.RefreshToken(ctx, clientID, invalidRefreshToken)
-	if err != nil {
-		if interlaceErr, ok := err.(*interlace.Error); ok {
-			fmt.Printf("Error Code: %s, Message: %s\n", interlaceErr.Code, interlaceErr.Message)
-		} else {
-			fmt.Printf("Error: %v\n", err)
-		}
+		// This might fail in sandbox if the refresh token is not yet valid
+		fmt.Printf("Note: Refresh token failed (this might be expected in sandbox): %v\n", err)
+		fmt.Println("\nIn production, you would:")
+		fmt.Println("1. Store the refresh token securely")
+		fmt.Println("2. Use it when the access token expires (after ~24 hours)")
+		fmt.Println("3. Get a new access token without re-authenticating")
+	} else {
+		fmt.Printf("New Access Token: %s\n", newTokenData.AccessToken)
+		fmt.Printf("Expires In: %d seconds\n", newTokenData.ExpiresIn)
+		fmt.Printf("Timestamp: %d\n", newTokenData.Timestamp)
+		fmt.Println("\nToken refresh successful!")
 	}
 
 	fmt.Println("\nDemo completed!")
+	fmt.Println("\nRefresh Token Usage:")
+	fmt.Println("- Store the refresh token securely after initial authentication")
+	fmt.Println("- Use it to get a new access token when the current one expires")
+	fmt.Println("- This avoids requiring the user to re-authenticate")
+	fmt.Println("- Typical use case: Long-lived background services or scheduled tasks")
 }
 
 // Helper function to check if token needs refresh

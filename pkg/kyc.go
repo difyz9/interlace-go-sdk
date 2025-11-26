@@ -30,9 +30,9 @@ func (c *KYCClient) SubmitKYC(ctx context.Context, accountID string, req *KYCSub
 	}
 
 	// Check for API errors
-	if kycResp.Code != "000000" {
+	if kycResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    kycResp.Code,
+			Code:    kycResp.GetCode(),
 			Message: kycResp.Message,
 		}
 	}
@@ -51,9 +51,9 @@ func (c *KYCClient) GetKYCStatus(ctx context.Context, accountID string) (*KYCSta
 	}
 
 	// Check for API errors
-	if statusResp.Code != "000000" {
+	if statusResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    statusResp.Code,
+			Code:    statusResp.GetCode(),
 			Message: statusResp.Message,
 		}
 	}
@@ -129,9 +129,9 @@ func (c *KYCClient) GetCDDDetail(ctx context.Context, accountID string) (*CDDDet
 	}
 
 	// Check for API errors
-	if cddResp.Code != "000000" {
+	if cddResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    cddResp.Code,
+			Code:    cddResp.GetCode(),
 			Message: cddResp.Message,
 		}
 	}

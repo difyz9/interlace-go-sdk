@@ -32,9 +32,9 @@ func (c *OAuthClient) Authorize(ctx context.Context, clientID string) (*OAuthAut
 	}
 
 	// Check for API errors
-	if authorizeResp.Code != "000000" {
+	if authorizeResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    authorizeResp.Code,
+			Code:    authorizeResp.GetCode(),
 			Message: authorizeResp.Message,
 		}
 	}
@@ -57,9 +57,9 @@ func (c *OAuthClient) GetAccessToken(ctx context.Context, code, clientID string)
 	}
 
 	// Check for API errors
-	if tokenResp.Code != "000000" {
+	if tokenResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    tokenResp.Code,
+			Code:    tokenResp.GetCode(),
 			Message: tokenResp.Message,
 		}
 	}
@@ -99,9 +99,9 @@ func (c *OAuthClient) RefreshToken(ctx context.Context, clientID, refreshToken s
 	}
 
 	// Check for API errors
-	if refreshResp.Code != "000000" {
+	if refreshResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    refreshResp.Code,
+			Code:    refreshResp.GetCode(),
 			Message: refreshResp.Message,
 		}
 	}

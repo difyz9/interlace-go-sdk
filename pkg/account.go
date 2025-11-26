@@ -30,9 +30,9 @@ func (c *AccountClient) Register(ctx context.Context, req *AccountRegisterReques
 	}
 
 	// Check for API errors
-	if registerResp.Code != "000000" {
+	if registerResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    registerResp.Code,
+			Code:    registerResp.GetCode(),
 			Message: registerResp.Message,
 		}
 	}
@@ -118,9 +118,9 @@ func (c *AccountClient) List(ctx context.Context, opts *AccountListOptions) (*Ac
 	}
 
 	// Check for API errors
-	if listResp.Code != "000000" {
+	if listResp.GetCode() != "000000" {
 		return nil, &Error{
-			Code:    listResp.Code,
+			Code:    listResp.GetCode(),
 			Message: listResp.Message,
 		}
 	}

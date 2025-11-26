@@ -24,8 +24,8 @@ func main() {
 	fmt.Println("\n1. 使用原有的 Register 函数")
 	req := &interlace.AccountRegisterRequest{
 		PhoneCountryCode: "86",
-		PhoneNumber:      "15900000031",
-		Email:            "15900000031@qq.com",
+		PhoneNumber:      "15500000032",
+		Email:            "15500000032@qq.com",
 		Name:             "golang_test",
 	}
 
